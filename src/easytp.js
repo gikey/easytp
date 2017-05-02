@@ -1,8 +1,11 @@
 /*! easytp v0.1.0 */
 (function( window, document ) {
-    var version = "0.1.0",
+
+    var version = "0.1.1",
         regTpl,
         dataTpl,
+        _easytp = window.easytp,
+        _$ = window.$;
         regTplJs = /(^( )?(if|for|else|switch|case|break|(\w+\.forEach)|{|}))(.*)?/g,
         easytp = function( selector ) {
             return new easytp.fn.init( selector );
@@ -10,10 +13,12 @@
 
     easytp.fn = easytp.prototype = {
         constructor: easytp,
+
         init: function( selector ) {
             this.selector = selector;
             return this;
         },
+
         render: function( data ) {
             var dom = document.getElementById( this.selector );
             if ( !dom ) return console.error('Can not found selector of ' + this.selector )
@@ -22,11 +27,23 @@
             dom.parentNode.replaceChild( elem, dom )
         }
     }
+
     easytp.settings = {
         "left_delimiter": "<%",
         "right_delimiter": "%>",
         "comment_delimiter": "<#"
     }
+
+    easytp.noConflict = function( deep ) {
+    	if ( window.$ === easytp ) {
+    		window.$ = _$;
+    	}
+    	if ( deep && window.easytp === easytp ) {
+    		window.easytp = _easytp;
+    	}
+    	return easytp;
+    }
+
     easytp.tplEngine = function( dom, data ) {
         var content = dom.innerHTML,
             code = 'var html = []; \n',
@@ -46,11 +63,14 @@
         code += 'return html.join("");';
         return new Function(code.replace( /[\r\t\n]/g, '' )).apply( data )
     }
+
     easytp.config = function( options ) {
         for ( var o in options ) {
             this.settings[o] = options[o];
         }
     }
+
     easytp.fn.init.prototype = easytp.fn;
     window.$ = window.easytp = easytp;
+
 })( this, document );
