@@ -1,0 +1,7 @@
+{
+    "root": "./",
+    "dev": "build",
+    "src": "src",
+    "dist": "dist",
+    "port": 3333
+}
