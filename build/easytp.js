@@ -1,10 +1,11 @@
 /*! easytp v1.0.1 */
 (function(window, document) {
 
-    var version = "0.1.1",
+    var version = "1.0.2",
         regTpl,
         dataTpl,
         _easytp = window.easytp,
+        $$ = window.$$,
         regTplJs = /(^( )?(if|for|else|switch|case|break|(\w+\.forEach)|{|}))(.*)?/g,
         easytp = function(selector) {
             return new easytp.fn.init(selector);
@@ -60,6 +61,6 @@
     }
 
     easytp.fn.init.prototype = easytp.fn;
-    window.easytp = easytp;
+    window.$$ = window.easytp = easytp;
 
 })(this, document);

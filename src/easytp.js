@@ -1,7 +1,7 @@
 /*! easytp v1.0.1 */
 (function(window, document) {
 
-    var version = "0.1.1",
+    var version = "1.0.2",
         regTpl,
         dataTpl,
         _easytp = window.easytp,
