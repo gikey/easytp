@@ -34,7 +34,6 @@
     easytp.settings = {
         "left_delimiter": "<%",
         "right_delimiter": "%>",
-        "comment_delimiter": "<#",
         "left_comment_delimiter": "<#",
         "right_comment_delimiter": "#>"
     }
@@ -46,7 +45,7 @@
         regTpl = new RegExp(this.settings.left_delimiter + '\\s*((?!' + this.settings.right_delimiter + ').)*\\s*' + this.settings.right_delimiter, 'g');
         dataTpl = new RegExp(this.settings.left_delimiter + '\\s*(.+)?\\s*' + this.settings.right_delimiter);
         commentTpl = new RegExp(this.settings.left_comment_delimiter + '\\s*((?!' + this.settings.right_comment_delimiter + ').)*\\s*' + this.settings.right_comment_delimiter, 'gm');
-        content = content.replace(commentTpl, '');
+        content = content.replace(new RegExp(this.settings.left_comment_delimiter, 'g'), '<!--').replace(new RegExp(this.settings.right_comment_delimiter, 'g'), '-->');
         var add = function(line, js) {
             js ? (code += line.match(regTplJs) ? line + '\n' : 'html.push(' + line + ');\n') :
                 (code += line != '' ? 'html.push("' + line.replace(/"/g, '\\"') + '");\n' : '');
