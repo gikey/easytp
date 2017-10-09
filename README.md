@@ -17,5 +17,3 @@ gulp
 * 调用 config 方法修改配置项
 
 * 调用 render 方法渲染(选择器必须为 id )
-
-* $冲突调用 noConflict 方法

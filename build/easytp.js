@@ -1,9 +1,10 @@
-/*! easytp v1.0.2 */
+/*! easytp v1.1.0 */
 (function(window, document) {
 
-    var version = "1.0.2",
+    var version = "1.1.0",
         regTpl,
         dataTpl,
+        commentTpl,
         _easytp = window.easytp,
         $$ = window.$$,
         regTplJs = /(^( )?(if|for|else|switch|case|break|(\w+\.forEach)|{|}))(.*)?/g,
@@ -19,19 +20,23 @@
             return this;
         },
 
-        render: function(data) {
-            var dom = document.getElementById(this.selector);
-            if (!dom) return console.error('Can not found selector of ' + this.selector)
-            var elem = document.createElement('div');
-            elem.innerHTML = easytp.tplEngine(dom, data);
-            dom.parentNode.replaceChild(elem, dom)
+        render: function(_selector, data) {
+            var dom = document.querySelector(this.selector);
+            if (!dom) return console.error('Can not found selector of ' + this.selector);
+            var content = easytp.tplEngine(dom, data),
+                element = document.querySelectorAll(_selector);
+            element.forEach(function(elem) {
+                elem.innerHTML = content;
+            })
         }
     }
 
     easytp.settings = {
         "left_delimiter": "<%",
         "right_delimiter": "%>",
-        "comment_delimiter": "<#"
+        "comment_delimiter": "<#",
+        "left_comment_delimiter": "<#",
+        "right_comment_delimiter": "#>"
     }
 
     easytp.tplEngine = function(dom, data) {
@@ -40,6 +45,8 @@
             index = 0;
         regTpl = new RegExp(this.settings.left_delimiter + '\\s*((?!' + this.settings.right_delimiter + ').)*\\s*' + this.settings.right_delimiter, 'g');
         dataTpl = new RegExp(this.settings.left_delimiter + '\\s*(.+)?\\s*' + this.settings.right_delimiter);
+        commentTpl = new RegExp(this.settings.left_comment_delimiter + '\\s*((?!' + this.settings.right_comment_delimiter + ').)*\\s*' + this.settings.right_comment_delimiter, 'gm');
+        content = content.replace(commentTpl, '');
         var add = function(line, js) {
             js ? (code += line.match(regTplJs) ? line + '\n' : 'html.push(' + line + ');\n') :
                 (code += line != '' ? 'html.push("' + line.replace(/"/g, '\\"') + '");\n' : '');

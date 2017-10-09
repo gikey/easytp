@@ -9,7 +9,9 @@
 </head>
 
 <body>
-    <script type="text/template" id="tpl">
+    <div class="list"></div>
+    <div class="list"></div>
+    <script type="text/template" id="tpl" class="tpl">
         <ul>
             {% for(var i in data) { %}
             <li>{% data[i].name %}</li>
@@ -20,7 +22,9 @@
     <script>
         $$.config({
             "left_delimiter": "{%",
-            "right_delimiter": "%}"
+            "right_delimiter": "%}",
+            "left_comment_delimiter": "{#",
+            "right_comment_delimiter": "#}"
         });
         var data = [{
             name: 'john',
@@ -29,7 +33,7 @@
             name: 'jack',
             age: 1
         }]
-        $$('tpl').render(data);
+        $$('#tpl').render('.list', data);
     </script>
 </body>
 
