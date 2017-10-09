@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const uglify = require('gulp-uglify');
+const minify = require('gulp-minify');
 const browserSync = require('browser-sync');
 const rename = require('gulp-rename');
 const plumber = require('gulp-plumber');
@@ -9,9 +10,12 @@ gulp.task('clone', () => {
     return gulp.src(`${config.src}/**/*.js`)
         .pipe(gulp.dest(`${config.dev}`))
         .pipe(plumber())
-        .pipe(uglify())
-        .pipe(rename((path) => {
-            path.basename += ".min";
+        .pipe(minify({
+            ext:{
+                min:'.min.js'
+            },
+            noSource: true,
+            preserveComments: 'some'
         }))
         .pipe(gulp.dest(`${config.dist}`))
 })
