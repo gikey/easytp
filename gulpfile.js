@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const uglify = require('gulp-uglify');
 const minify = require('gulp-minify');
 const browserSync = require('browser-sync');
 const rename = require('gulp-rename');
