@@ -10,13 +10,12 @@
   <script type="text/template" id="tpl">
     <ul>
     {% for(var i in data) { %}
-      <li>{% data[i].name %} -- {% data[i].age %}</li>
+      <li>{% data[i].name %}</li>
     {% } %}
     </ul>
   </script>
   <script src="build/easytp.js"></script>
   <script>
-  // 可以不设置，默认 <% %>
   $.config({
       "left_delimiter": "{%",
       "right_delimiter": "%}"
@@ -32,4 +31,3 @@
   </script>
 </body>
 </html>
-
